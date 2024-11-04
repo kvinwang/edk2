@@ -885,6 +885,7 @@ SecCoreStartupWithStack (
     InitializeCpuExceptionHandlers (NULL);
   }
 
+  void ProcessLibraryConstructorList (void);
   ProcessLibraryConstructorList ();
 
   if (!SevEsIsEnabled ()) {
