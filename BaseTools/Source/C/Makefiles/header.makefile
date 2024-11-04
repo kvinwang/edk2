@@ -85,35 +85,34 @@ endif
 
 INCLUDE = $(TOOL_INCLUDE) -I $(MAKEROOT) -I $(MAKEROOT)/Include/Common -I $(MAKEROOT)/Include/ -I $(MAKEROOT)/Include/IndustryStandard -I $(MAKEROOT)/Common/ -I .. -I . $(ARCH_INCLUDE)
 INCLUDE += -I $(EDK2_PATH)/MdePkg/Include
-CPPFLAGS = $(INCLUDE)
+CPPFLAGS += $(INCLUDE)
 
 # keep EXTRA_OPTFLAGS last
 BUILD_OPTFLAGS = -O2 $(EXTRA_OPTFLAGS)
 
 ifeq ($(DARWIN),Darwin)
 # assume clang or clang compatible flags on OS X
-CFLAGS = -MD -fshort-wchar -fno-strict-aliasing -Wall -Werror \
+CFLAGS += -MD -fshort-wchar -fno-strict-aliasing -Wall -Werror \
 -Wno-deprecated-declarations -Wno-self-assign -Wno-unused-result -nostdlib -g
 else
 ifneq ($(CLANG),)
-CFLAGS = -MD -fshort-wchar -fno-strict-aliasing -fwrapv \
+CFLAGS += -MD -fshort-wchar -fno-strict-aliasing -fwrapv \
 -fno-delete-null-pointer-checks -Wall -Werror \
 -Wno-deprecated-declarations -Wno-self-assign \
 -Wno-unused-result -nostdlib -g
 else
-CFLAGS = -MD -fshort-wchar -fno-strict-aliasing -fwrapv \
+CFLAGS += -MD -fshort-wchar -fno-strict-aliasing -fwrapv \
 -fno-delete-null-pointer-checks -Wall -Werror \
 -Wno-deprecated-declarations -Wno-stringop-truncation -Wno-restrict \
 -Wno-unused-result -nostdlib -g
 endif
 endif
 ifneq ($(CLANG),)
-LDFLAGS =
-CXXFLAGS = -Wno-deprecated-register -Wno-unused-result -std=c++14
+CXXFLAGS += -Wno-deprecated-register -Wno-unused-result -std=c++14
 else
-LDFLAGS =
-CXXFLAGS = -Wno-unused-result
+CXXFLAGS += -Wno-unused-result
 endif
+
 ifeq ($(HOST_ARCH), IA32)
 #
 # Snow Leopard  is a 32-bit and 64-bit environment. uname -m returns i386, but gcc defaults
